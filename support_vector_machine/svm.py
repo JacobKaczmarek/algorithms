@@ -4,4 +4,4 @@ class Svm:
         self.weights = None
 
     def fit(self, X, y):
-        
+        pass
