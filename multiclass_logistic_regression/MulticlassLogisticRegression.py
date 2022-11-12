@@ -6,12 +6,13 @@ def softmax(z):
 
 
 class MulticlassLogisticRegression:
-    def __init__(self, iters=1000, learning_rate=0.001):
+    def __init__(self, iters=1000, learning_rate=0.001, regularization=False):
         self.weights = None
         self.bias = None
         self.iters = iters
         self.learning_rate = learning_rate
         self.onehot_encoder = OneHotEncoder(sparse=False)
+        self.regularization = regularization
 
 
     def fit(self, X, y):
@@ -24,7 +25,8 @@ class MulticlassLogisticRegression:
         for i in range(self.iters):
             Z = - X @ self.weights
             p = softmax(Z)
-            dw = 1 / n_samples * X.T @ (y_onehot - p) + 2 * self.weights
+            dw = 1 / n_samples * X.T @ (y_onehot - p) + 2 * 1/(i+1) * self.weights
+            print(dw)
 
             self.weights -= self.learning_rate * dw
 
